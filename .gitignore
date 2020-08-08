@@ -1,0 +1,14 @@
+# OS generated files
+.DS_Store
+
+# Output files
+*.pdf
+*.pyc
+
+# Output folders
+**/temp
+**/out
+
+# Other
+.vscode
+
