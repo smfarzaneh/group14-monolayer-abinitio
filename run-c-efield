@@ -5,8 +5,8 @@ prefix='graphene'
 pseudo_c='C.rel-pbe-n-kjpaw_psl.1.0.0.UPF'
 ecutwfc=40.0
 ecutrho=326.0
-num_kx=20
-num_ky=20
+num_kx=10
+num_ky=10
 num_kz=1
 num_bands=16
 # electric field 
@@ -37,6 +37,7 @@ PSEUDO_LIST="$pseudo_si"
 TMP_ROOT_DIR="$THIS_DIR/temp"
 TMP_DIR="$THIS_DIR/temp/$prefix-efield"
 IN_DIR="$THIS_DIR/in"
+OUT_ROOT_DIR="$THIS_DIR/out"
 OUT_DIR="$THIS_DIR/out/$prefix-efield"
 
 $ECHO
@@ -54,7 +55,7 @@ for DIR in "$BIN_DIR" "$PSEUDO_DIR" ; do
         exit 1
     fi
 done
-for DIR in "$TMP_ROOT_DIR" "$TMP_DIR" "$OUT_DIR" ; do
+for DIR in "$TMP_ROOT_DIR" "$TMP_DIR" "$OUT_ROOT_DIR" "$OUT_DIR" ; do
     if test ! -d $DIR ; then
         mkdir $DIR
     fi
@@ -82,7 +83,9 @@ for FILE in $PSEUDO_LIST ; do
 done
 $ECHO " done"
 
+# parallelization 
 PARA_PREFIX=""
+# PARA_PREFIX="mpirun -np 4"
 
 # how to run executables
 PW_COMMAND="$PARA_PREFIX $BIN_DIR/pw.x $PARA_POSTFIX"
