@@ -1,0 +1,55 @@
+#!/bin/sh
+
+cat > $prefix.nscf.in <<EOF
+ &control
+  calculation = 'nscf'
+  title = 'Non self-consistent field calculation of $prefix'
+  verbosity = 'high'
+  restart_mode = 'restart'
+  outdir ='$TMP_DIR/'
+  prefix ='$prefix'
+  pseudo_dir = '$PSEUDO_DIR/'
+  tprnfor = .TRUE.
+  lelfield = $efield
+  nberrycyc = 1
+  gdir = 3
+  nppstr = 1
+ /
+ &system
+  ibrav = 4
+  A = 2.46500000
+  C = 20.00000000
+  nat = 2
+  ntyp = 1
+  nbnd = $num_bands
+  ecutwfc = $ecutwfc
+  ecutrho = $ecutrho
+  occupations = "fixed",
+  ! smearing    = "marzari-vanderbilt",
+  ! degauss     = 0.05D0,
+  lspinorb = .TRUE.
+  noncolin = .TRUE.
+  starting_magnetization = 0.0
+ /
+ &electrons
+  electron_maxstep = 100
+  conv_thr = 1.0d-8
+  mixing_mode = 'plain'
+  mixing_beta = 0.3d0
+  diagonalization = 'david'
+  diago_full_acc = .TRUE.
+  efield = $efield_amp
+  startingwfc = $swfc
+ /
+ATOMIC_SPECIES
+ C 12.0106000  $pseudo_c
+ATOMIC_POSITIONS {angstrom}
+ C 0.00000000 -0.711584210  0.00000000
+ C 0.00000000  0.711584210  0.00000000
+K_POINTS {tpiba_b}
+4 
+ gG 30
+ K 30
+ M 30 
+ gG 0
+EOF
