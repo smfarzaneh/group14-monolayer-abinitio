@@ -1,0 +1,15 @@
+#!/bin/sh
+
+cat > $prefix.bands.post.in << EOF
+ &bands
+    prefix  = '$prefix'
+    outdir = '$TMP_DIR/'
+    filband = '$prefix.bands.post.dat'
+    lsym = .TRUE.
+    lp = .TRUE.
+    filp= '$prefix.bands.post.momentum.dat'
+    lsigma(1) = .TRUE.
+    lsigma(2) = .TRUE.
+    lsigma(3) = .TRUE.
+ /
+EOF
