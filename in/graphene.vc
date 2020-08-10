@@ -42,7 +42,7 @@ cat > $prefix.vc.in <<EOF
   upscale = 20.0
  /
  &cell
-  cell_dofree = 'all'
+  cell_dofree = '2Dxy'
  /
 ATOMIC_SPECIES
  C 12.0106000  $pseudo_c
