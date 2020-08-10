@@ -1,0 +1,49 @@
+#!/bin/sh
+
+cat > $prefix.bands.in <<EOF
+ &control
+  calculation = 'bands'
+  title = 'Band structure calculation of $prefix'
+  verbosity = 'high'
+  restart_mode = 'restart'
+  outdir ='$TMP_DIR/'
+  prefix ='$prefix'
+  pseudo_dir = '$PSEUDO_DIR/'
+  tprnfor = .TRUE.
+ /
+ &system
+  ibrav = 4
+  A = 3.86769668
+  C = 20.00000000
+  nat = 2
+  ntyp = 1
+  nbnd = $num_bands
+  ecutwfc = $ecutwfc
+  ecutrho = $ecutrho
+  occupations = "smearing",
+  smearing    = "marzari-vanderbilt",
+  degauss     = 1.0d-4,
+  lspinorb = .TRUE.
+  noncolin = .TRUE.
+  starting_magnetization = 0.0
+ /
+ &electrons
+  electron_maxstep = 100
+  conv_thr = 1.0d-8
+  mixing_mode = 'plain'
+  mixing_beta = 0.3d0
+  diagonalization = 'david'
+  diago_full_acc = .TRUE.
+ /
+ATOMIC_SPECIES
+ Si 28.0850000  $pseudo_si
+ATOMIC_POSITIONS {angstrom}
+ Si 0.00000000 -1.11650786 -0.22662511
+ Si 0.00000000  1.11650786  0.22662511
+K_POINTS {tpiba_b}
+4 
+ gG 30
+ K 30
+ M 30 
+ gG 0
+EOF
