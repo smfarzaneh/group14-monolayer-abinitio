@@ -28,9 +28,6 @@ cat > $prefix.vc.in <<EOF
   occupations = "smearing",
   smearing    = "marzari-vanderbilt",
   degauss     = 1.0d-4,
-  lspinorb = .TRUE.
-  noncolin = .TRUE.
-  starting_magnetization = 0.0
  /
  &electrons
   electron_maxstep = 100
