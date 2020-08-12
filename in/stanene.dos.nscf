@@ -1,0 +1,43 @@
+#!/bin/sh
+
+cat > $prefix.dos.nscf.in <<EOF
+ &control
+  calculation = 'nscf'
+  title = 'Non scf calculation of $prefix'
+  verbosity = 'high'
+  restart_mode = 'from_scratch'
+  outdir ='$TMP_DIR/'
+  prefix ='$prefix'
+  pseudo_dir = '$PSEUDO_DIR/'
+  tprnfor = .TRUE.
+ /
+ &system
+  ibrav = 4
+  A =  4.65184841
+  C = 20.00000000
+  nat = 2
+  ntyp = 1
+  nbnd = $num_bands
+  ecutwfc = $ecutwfc
+  ecutrho = $ecutrho
+  occupations = "tetrahedra",
+  lspinorb = .TRUE.
+  noncolin = .TRUE.
+  starting_magnetization = 0.0
+ /
+ &electrons
+  electron_maxstep = 100
+  conv_thr = 1.0d-8
+  mixing_mode = 'plain'
+  mixing_beta = 0.3d0
+  diagonalization = 'david'
+  diago_full_acc = .TRUE.
+ /
+ATOMIC_SPECIES
+ Sn 118.7107000  $pseudo_sn
+ATOMIC_POSITIONS {angstrom}
+ Sn 0.00000000 -1.34287297 -0.43088962
+ Sn 0.00000000  1.34287297  0.43088962
+K_POINTS {automatic}
+ $num_kx $num_ky $num_kz 0 0 0
+EOF
