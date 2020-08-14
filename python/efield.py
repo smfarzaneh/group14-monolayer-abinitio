@@ -21,7 +21,7 @@ class Efield():
         f.close()
 
     @classmethod
-    def print_kpoints(self, direction='x', num_k=201):
+    def write_kpoints(self, direction='x', num_k=201):
         relpath = '../in/k' + direction + '.val'
         current = os.path.dirname(__file__)
         abspath = os.path.join(current, relpath)
